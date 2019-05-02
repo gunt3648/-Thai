@@ -1,11 +1,11 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
+import { LoginPageComponent } from './components/login-page/login-page.component';
+
 const routes: Routes = [
-  // { path: '', redirectTo: 'under-construct', pathMatch: 'full' },
-  // { path: 'under-construct', component: UnderConstructComponent, pathMatch: 'full' },
-  // { path: 'temp-monitor', component: TempMonitoringComponent, pathMatch: 'full' },
-  // { path: '**', component: PageNotFoundComponent }
+  { path: '', component: LoginPageComponent, pathMatch: 'full' },
+  { path: '**', redirectTo: '/' }
 ];
 
 @NgModule({
