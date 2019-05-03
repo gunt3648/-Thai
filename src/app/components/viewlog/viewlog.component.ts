@@ -5,7 +5,7 @@ import { Component, OnInit } from '@angular/core';
   templateUrl: './viewlog.component.html',
   styleUrls: ['./viewlog.component.scss']
 })
-export class ViewlogComponent implements OnInit {
+export class ViewLogComponent implements OnInit {
 
   constructor() { }
 

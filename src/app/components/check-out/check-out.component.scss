@@ -1,0 +1,15 @@
+@import "../../shared/theme";
+
+.check-out-section {
+  background-color: $background-secondary;
+
+  margin-top: 1em;
+
+  .check-out {
+    padding: 1em;
+
+    h2 {
+      color: $font-primary
+    }
+  }
+}

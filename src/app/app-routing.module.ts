@@ -8,7 +8,7 @@ import { AuthGuardService as AuthGuard } from './services/auth-guard/auth-guard.
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent, pathMatch: 'full' },
-  { path: 'employee', component: EmployeeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
+  { path: 'home', component: EmployeeComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: 'view-log', component: ViewLogComponent, pathMatch: 'full', canActivate: [AuthGuard] },
   { path: '**', redirectTo: '/' }
 ];

@@ -1,0 +1,23 @@
+<div class="item-table-section">
+  <div class="item-table">
+    <h2>
+      Item
+    </h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Item</th>
+          <th scope="col">Prize</th>
+        </tr>
+      </thead>
+      <tbody *ngFor="let item of mock; let i = index">
+        <tr>
+          <td>{{ i+1 }}</td>
+          <td>{{ item.item }}</td>
+          <td>{{ item.prize }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

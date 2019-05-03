@@ -8,16 +8,24 @@ import { environment } from 'src/environments/environment';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { EmployeeComponent } from './component/employee/employee.component';
-import { ViewlogComponent } from './component/viewlog/viewlog.component';
+import { EmployeeComponent } from './components/employee/employee.component';
+import { ViewLogComponent } from './components/viewlog/viewlog.component';
 import { LoginPageComponent } from './components/login-page/login-page.component';
+import { NavbarComponent } from './components/navbar/navbar.component';
+import { UserInfoComponent } from './components/user-info/user-info.component';
+import { CheckOutComponent } from './components/check-out/check-out.component';
+import { ItemTableComponent } from './components/item-table/item-table.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     EmployeeComponent,
-    ViewlogComponent
-    LoginPageComponent
+    ViewLogComponent,
+    LoginPageComponent,
+    NavbarComponent,
+    UserInfoComponent,
+    CheckOutComponent,
+    ItemTableComponent
   ],
   imports: [
     AppRoutingModule,
