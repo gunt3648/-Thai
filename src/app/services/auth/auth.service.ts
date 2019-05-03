@@ -33,7 +33,7 @@ export class AuthService {
     try {
       const lowerCaseEmail = email.toLowerCase();
       await this.afAuth.auth.signInWithEmailAndPassword(lowerCaseEmail, password);
-      this.router.navigate(['/']);
+      this.router.navigate(['/employee']);
     } catch (e) {
       console.log('Something went wrong...');
     }
