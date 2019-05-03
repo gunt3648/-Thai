@@ -1,0 +1,13 @@
+@import "../../shared/theme";
+
+.user-info-section {
+  background-color: $background-secondary;
+
+  .user-info {
+    padding: 1em;
+
+    h2 {
+      color: $font-primary
+    }
+  }
+}

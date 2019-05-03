@@ -1,0 +1,13 @@
+@import "../../shared/theme";
+
+.item-table-section {
+  background-color: $background-secondary;
+
+  .item-table {
+    padding: 1em;
+
+    h2 {
+      color: $font-primary
+    }
+  }
+}
