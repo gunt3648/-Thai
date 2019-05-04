@@ -15,7 +15,7 @@ export class AuthGuardManagerService implements CanActivate {
   ) { }
 
   canActivate(): boolean {
-    if (!this.auth.isLoggedIn && this.auth.isManager) {
+    if (!this.auth.isLoggedIn || !this.auth.isManager) {
       this.router.navigate(['login']);
       return false;
     }
