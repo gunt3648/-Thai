@@ -12,6 +12,9 @@
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/view-log']">View Log</a>
         </li>
+        <li class="nav-item" *ngIf="isManager">
+          <a class="nav-link" [routerLink]="['/account-management']">Account Management</a>
+        </li>
       </ul>
     </div>
     <button *ngIf="isLoggedIn" (click)="logout()">

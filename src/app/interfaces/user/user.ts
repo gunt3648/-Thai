@@ -4,4 +4,5 @@ export interface UserInformation {
   email: string;
   name: string;
   authLevel: AuthLevel;
+  uid?: string;
 }

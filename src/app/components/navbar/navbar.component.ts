@@ -20,6 +20,10 @@ export class NavbarComponent implements OnInit {
     return this.auth.isLoggedIn;
   }
 
+  get isManager(): boolean {
+    return this.auth.isManager;
+  }
+
   logout() {
     this.auth.logout();
   }

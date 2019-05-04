@@ -28,6 +28,12 @@ export class UserDataService {
       map(result => {
         return result[0].authLevel;
       })
-    )
+    );
+  }
+
+  public getAllUser(): Observable<UserInformation[]> {
+    return this.db.list<UserInformation>('users',
+      ref => ref.orderByChild('authLevel')
+    ).valueChanges();
   }
 }

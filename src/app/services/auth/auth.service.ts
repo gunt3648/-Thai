@@ -1,8 +1,9 @@
-import { Subscription } from 'rxjs';
 import { Injectable, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
+import { Subscription } from 'rxjs';
 import { User } from 'firebase';
 
 import { UserDataService } from './../user-data/user-data.service';
@@ -21,6 +22,7 @@ export class AuthService implements OnDestroy {
     private afAuth: AngularFireAuth,
     private db: AngularFireDatabase,
     private router: Router,
+    private http: HttpClient,
     private userData: UserDataService
   ) {
     this.afAuth.authState.subscribe(user => {
@@ -46,7 +48,7 @@ export class AuthService implements OnDestroy {
       await this.setAuthLevel();
       this.router.navigate(['/home']);
     } catch (e) {
-      console.log('Something went wrong...');
+      console.log(e);
     }
   }
 
@@ -75,6 +77,10 @@ export class AuthService implements OnDestroy {
     return currentAuthLevel === AuthLevel.Manager;
   }
 
+  public get loggingInAccount(): string {
+    return JSON.parse(localStorage.getItem('user')).email;
+  }
+
   public async logout() {
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
@@ -82,23 +88,33 @@ export class AuthService implements OnDestroy {
     this.router.navigate(['/']);
   }
 
-  public async createAccount(email: string, password: string, name: string) {
+  public async createAccount(email: string, password: string, name: string, authLevel: number) {
     try {
       const lowerCaseEmail = email.toLowerCase();
-      await this.afAuth.auth.createUserWithEmailAndPassword(lowerCaseEmail, password);
-      await this.addEmployee(lowerCaseEmail, name);
+      await this.subscription.push(
+        this.http.post('https://us-central1-atthai-a950a.cloudfunctions.net/register', {
+          email: lowerCaseEmail,
+          pass: password,
+          key: 'Ah56iU7AvL09M2qwi1B'
+        }).subscribe()
+      );
+      await this.addAccount(lowerCaseEmail, name, authLevel);
     } catch (e) {
-      console.log('Something went wrong...');
+      console.log(e);
     }
   }
 
-  private addEmployee(email: string, name: string) {
+  private addAccount(email: string, name: string, authLevel: number) {
     const itemsRef = this.db.list('users');
     const userInformation: UserInformation = {
       email,
       name,
-      authLevel: AuthLevel.Employee
+      authLevel: (authLevel === 1) ? AuthLevel.Employee : AuthLevel.Manager
     }
     itemsRef.push(userInformation);
+  }
+
+  public async removeAccount(email: string) {
+
   }
 }
