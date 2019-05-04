@@ -28,7 +28,7 @@ export class UserTableComponent implements OnInit {
   }
 
   removeUser(email: string) {
-    alert(email);
+    this.auth.removeAccount(email);
   }
 
   isLoggingIn(email: string): boolean {

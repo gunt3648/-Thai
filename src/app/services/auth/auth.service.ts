@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Subscription } from 'rxjs';
+import { map } from 'rxjs/operators';
 import { User } from 'firebase';
 
 import { UserDataService } from './../user-data/user-data.service';
@@ -90,31 +91,59 @@ export class AuthService implements OnDestroy {
 
   public async createAccount(email: string, password: string, name: string, authLevel: number) {
     try {
-      const lowerCaseEmail = email.toLowerCase();
-      await this.subscription.push(
-        this.http.post('https://us-central1-atthai-a950a.cloudfunctions.net/register', {
-          email: lowerCaseEmail,
-          pass: password,
-          key: 'Ah56iU7AvL09M2qwi1B'
-        }, {responseType: 'text'}).subscribe()
-      );
-      await this.addAccount(lowerCaseEmail, name, authLevel);
+      if (email && password && name && authLevel) {
+        const lowerCaseEmail = email.toLowerCase();
+        await this.subscription.push(
+          this.http.post('https://us-central1-atthai-a950a.cloudfunctions.net/register', {
+            email: lowerCaseEmail,
+            pass: password,
+            key: 'Ah56iU7AvL09M2qwi1B'
+          }, { responseType: 'text' }).subscribe()
+        );
+        await this.addAccountToDatabase(lowerCaseEmail, name, authLevel);
+      }
     } catch (e) {
       console.log(e);
     }
   }
 
-  private addAccount(email: string, name: string, authLevel: number) {
+  private addAccountToDatabase(email: string, name: string, authLevel: number) {
     const itemsRef = this.db.list('users');
     const userInformation: UserInformation = {
       email,
       name,
-      authLevel: (authLevel === 1) ? AuthLevel.Employee : AuthLevel.Manager
+      authLevel: (authLevel === 1) ? AuthLevel.Employee : AuthLevel.Manager,
+      createDate: new Date(),
+      createBy: this.loggingInAccount
     }
     itemsRef.push(userInformation);
   }
 
   public async removeAccount(email: string) {
+    try {
+      const lowerCaseEmail = email.toLowerCase();
+      await this.subscription.push(
+        this.http.post('https://us-central1-atthai-a950a.cloudfunctions.net/delete', {
+          email: lowerCaseEmail,
+          key: 'Ah56iU7AvL09M2qwi1B'
+        }, { responseType: 'text' }).subscribe()
+      );
+      await this.removeAccountFromDatabase(lowerCaseEmail);
+    } catch (e) {
+      console.log(e);
+    }
+  }
 
+  private removeAccountFromDatabase(email: string) {
+    const itemsRef = this.db.list('users');
+    this.subscription.push(
+      this.db.list('users',
+        ref => ref.orderByChild('email').equalTo(email)
+      ).snapshotChanges().pipe(
+        map(items => {
+          itemsRef.remove(items[0].key);
+        })
+      ).subscribe()
+    );
   }
 }
