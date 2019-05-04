@@ -96,7 +96,7 @@ export class AuthService implements OnDestroy {
           email: lowerCaseEmail,
           pass: password,
           key: 'Ah56iU7AvL09M2qwi1B'
-        }).subscribe()
+        }, {responseType: 'text'}).subscribe()
       );
       await this.addAccount(lowerCaseEmail, name, authLevel);
     } catch (e) {
