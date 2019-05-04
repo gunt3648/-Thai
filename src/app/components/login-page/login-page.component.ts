@@ -24,7 +24,7 @@ export class LoginPageComponent implements OnInit {
     if (email && pass) {
       this.auth.login(email, pass);
     } else {
-      alert('Email and password are required!')
+      alert('Email and password are required!');
     }
   }
 

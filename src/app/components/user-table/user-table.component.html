@@ -1,0 +1,24 @@
+<div class="account-management-section">
+  <div class="account-management">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Job</th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="userData$ | async as users">
+        <tr *ngFor="let user of users; let i = index">
+          <td>{{ i+1 }}</td>
+          <td>{{ user.name }}</td>
+          <td>{{ user.email }}</td>
+          <td>{{ (user.authLevel == 1) ? 'Employee' : 'Manager' }}</td>
+          <td><button (click)="removeUser(user.email)" [disabled]="isLoggingIn(user.email)">remove</button></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
