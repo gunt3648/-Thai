@@ -3,8 +3,8 @@ export interface Item {
   name: string;
   price: number;
   stock: string;
-  createBy: string;
-  lastUpdate: Date;
+  createdBy: string;
+  createdDate: Date | string;
 }
 
 export interface QuantityBySize {

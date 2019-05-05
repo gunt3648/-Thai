@@ -34,8 +34,8 @@ export class ItemDataService implements OnDestroy {
       name,
       price,
       stock,
-      createBy: this.auth.loggingInAccount,
-      lastUpdate: new Date()
+      createdBy: this.auth.loggingInAccount,
+      createdDate: new Date().toLocaleString()
     };
     await itemsRef.push(itemInformation);
     await this.updateLastItemKey();
