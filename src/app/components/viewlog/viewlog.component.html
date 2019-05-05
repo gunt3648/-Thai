@@ -1,29 +1,23 @@
+<app-navbar></app-navbar>
+
 <div class="container">
   <h2>Viewlog</h2>
   <p>Shop name:</p>
   <table class="table">
     <thead class="thead-dark">
       <tr>
-        <th>Firstname</th>
-        <th>Lastname</th>
-        <th>Email</th>
+        <th>Actor</th>
+        <th>Action</th>
+        <th>Time</th>
+        <th>Message</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>John</td>
-        <td>Doe</td>
-        <td>john@example.com</td>
-      </tr>
-      <tr>
-        <td>Mary</td>
-        <td>Moe</td>
-        <td>mary@example.com</td>
-      </tr>
-      <tr>
-        <td>July</td>
-        <td>Dooley</td>
-        <td>july@example.com</td>
+    <tbody *ngIf="log$ | async as logs">
+      <tr *ngFor="let log of logs">
+        <td>{{ log.actor }}</td>
+        <td>{{ log.act }}</td>
+        <td>{{ log.time }}</td>
+        <td>{{ log.msg }}</td>
       </tr>
     </tbody>
   </table>
