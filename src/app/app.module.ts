@@ -19,6 +19,9 @@ import { ItemTableComponent } from './components/item-table/item-table.component
 import { AccountManagementComponent } from './components/account-management/account-management.component';
 import { UserTableComponent } from './components/user-table/user-table.component';
 import { UserRegisterComponent } from './components/user-register/user-register.component';
+import { ItemManagementComponent } from './components/item-management/item-management.component';
+import { ItemRegisterComponent } from './components/item-register/item-register.component';
+import { ItemQuantityComponent } from './components/item-quantity/item-quantity.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +35,10 @@ import { UserRegisterComponent } from './components/user-register/user-register.
     ItemTableComponent,
     AccountManagementComponent,
     UserTableComponent,
-    UserRegisterComponent
+    UserRegisterComponent,
+    ItemManagementComponent,
+    ItemRegisterComponent,
+    ItemQuantityComponent
   ],
   imports: [
     AppRoutingModule,
