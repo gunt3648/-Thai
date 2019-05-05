@@ -3,7 +3,7 @@
     <h2>
       Item
     </h2>
-    <table class="table table-striped" *ngIf="items$ | async as items">
+    <table class="table table-striped">
       <thead>
         <tr>
           <th scope="col">#</th>
@@ -13,8 +13,8 @@
           <th scope="col"></th>
         </tr>
       </thead>
-      <tbody *ngFor="let item of items; let i = index">
-        <tr>
+      <tbody *ngIf="items$ | async as items">
+        <tr *ngFor="let item of items; let i = index">
           <td>{{ i+1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.price }}</td>
