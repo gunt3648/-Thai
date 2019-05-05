@@ -7,12 +7,14 @@ import { LoginPageComponent } from './components/login-page/login-page.component
 import { AccountManagementComponent } from './components/account-management/account-management.component';
 import { AuthGuardService as EmpAuthGuard } from './services/auth-guard/auth-guard.service';
 import { AuthGuardManagerService as MgrAuthGuard } from './services/auth-guard-manager/auth-guard-manager.service';
+import { ItemManagementComponent } from './components/item-management/item-management.component';
 
 const routes: Routes = [
   { path: '', component: LoginPageComponent, pathMatch: 'full' },
   { path: 'home', component: EmployeeComponent, pathMatch: 'full', canActivate: [EmpAuthGuard] },
   { path: 'view-log', component: ViewLogComponent, pathMatch: 'full', canActivate: [EmpAuthGuard] },
   { path: 'account-management', component: AccountManagementComponent, pathMatch: 'full', canActivate: [MgrAuthGuard] },
+  { path: 'item-management', component: ItemManagementComponent, pathMatch: 'full', canActivate: [MgrAuthGuard] },
   { path: '**', redirectTo: '/' }
 ];
 

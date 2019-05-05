@@ -15,6 +15,9 @@
         <li class="nav-item" *ngIf="isManager">
           <a class="nav-link" [routerLink]="['/account-management']">Account Management</a>
         </li>
+        <li class="nav-item" *ngIf="isManager">
+          <a class="nav-link" [routerLink]="['/item-management']">Item Management</a>
+        </li>
       </ul>
     </div>
     <button *ngIf="isLoggedIn" (click)="logout()">
