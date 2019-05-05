@@ -4,7 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AngularFireAuth } from '@angular/fire/auth';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 import { User } from 'firebase';
 
 import { UserDataService } from './../user-data/user-data.service';
@@ -98,7 +98,9 @@ export class AuthService implements OnDestroy {
             email: lowerCaseEmail,
             pass: password,
             key: 'Ah56iU7AvL09M2qwi1B'
-          }, { responseType: 'text' }).subscribe()
+          }, { responseType: 'text' }).pipe(
+            take(1)
+          ).subscribe()
         );
         await this.addAccountToDatabase(lowerCaseEmail, name, authLevel);
       }
@@ -126,7 +128,9 @@ export class AuthService implements OnDestroy {
         this.http.post('https://us-central1-atthai-a950a.cloudfunctions.net/delete', {
           email: lowerCaseEmail,
           key: 'Ah56iU7AvL09M2qwi1B'
-        }, { responseType: 'text' }).subscribe()
+        }, { responseType: 'text' }).pipe(
+          take(1)
+        ).subscribe()
       );
       await this.removeAccountFromDatabase(lowerCaseEmail);
     } catch (e) {
@@ -140,6 +144,7 @@ export class AuthService implements OnDestroy {
       this.db.list('users',
         ref => ref.orderByChild('email').equalTo(email)
       ).snapshotChanges().pipe(
+        take(1),
         map(items => {
           itemsRef.remove(items[0].key);
         })
