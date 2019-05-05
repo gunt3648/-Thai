@@ -10,6 +10,8 @@ import { User } from 'firebase';
 import { UserDataService } from './../user-data/user-data.service';
 import { UserInformation } from './../../interfaces/user/user';
 import { AuthLevel } from 'src/app/interfaces/auth-level/auth-level.enum';
+import { LogService } from '../log/log.service';
+import { Action } from 'src/app/interfaces/action/action.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -24,7 +26,8 @@ export class AuthService implements OnDestroy {
     private db: AngularFireDatabase,
     private router: Router,
     private http: HttpClient,
-    private userData: UserDataService
+    private userData: UserDataService,
+    private logService: LogService
   ) {
     this.afAuth.authState.subscribe(user => {
       if (user) {
@@ -47,6 +50,7 @@ export class AuthService implements OnDestroy {
       const lowerCaseEmail = email.toLowerCase();
       await this.afAuth.auth.signInWithEmailAndPassword(lowerCaseEmail, password);
       await this.setAuthLevel();
+      await this.logService.record(Action.Login, lowerCaseEmail, '');
       this.router.navigate(['/home']);
     } catch (e) {
       console.log(e);
@@ -83,6 +87,7 @@ export class AuthService implements OnDestroy {
   }
 
   public async logout() {
+    await this.logService.record(Action.Logout, this.loggingInAccount);
     await this.afAuth.auth.signOut();
     localStorage.removeItem('user');
     localStorage.removeItem('auth-level');
@@ -103,6 +108,7 @@ export class AuthService implements OnDestroy {
           ).subscribe()
         );
         await this.addAccountToDatabase(lowerCaseEmail, name, authLevel);
+        await this.logService.record(Action.Create, this.loggingInAccount, `Created account: ${email}`);
       }
     } catch (e) {
       console.log(e);
@@ -133,6 +139,7 @@ export class AuthService implements OnDestroy {
         ).subscribe()
       );
       await this.removeAccountFromDatabase(lowerCaseEmail);
+      await this.logService.record(Action.Delete, this.loggingInAccount, `Deleted account: ${email}`);
     } catch (e) {
       console.log(e);
     }

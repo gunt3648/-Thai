@@ -1,3 +1,4 @@
+import { LogService } from './../log/log.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Subscription, Observable } from 'rxjs';
@@ -5,6 +6,7 @@ import { map, take } from 'rxjs/operators';
 
 import { AuthService } from './../auth/auth.service';
 import { Item, QuantityBySize } from 'src/app/interfaces/item/item';
+import { Action } from 'src/app/interfaces/action/action.enum';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +17,8 @@ export class ItemDataService implements OnDestroy {
 
   constructor(
     private db: AngularFireDatabase,
-    private auth: AuthService
+    private auth: AuthService,
+    private logService: LogService
   ) { }
 
   ngOnDestroy() {
@@ -54,6 +57,7 @@ export class ItemDataService implements OnDestroy {
           itemsRef.update(items[0].key, {
             key: items[0].key
           });
+          this.logService.record(Action.Create, this.auth.loggingInAccount, `Created item: ${items[0].key}`);
         })
       ).subscribe()
     );
@@ -79,14 +83,15 @@ export class ItemDataService implements OnDestroy {
     );
   }
 
-  public updateItemInfo(key: string, itemInfo: Item) {
+  public async updateItemInfo(key: string, itemInfo: Item) {
     const itemsRef = this.db.list('items-info');
-    itemsRef.update(key, itemInfo);
+    await itemsRef.update(key, itemInfo);
+    await this.logService.record(Action.Update, this.auth.loggingInAccount, `Updated item: ${key}`);
   }
 
-  public updateItemQuantity(key: string, itemQuantity: QuantityBySize) {
+  public async updateItemQuantity(key: string, itemQuantity: QuantityBySize) {
     const itemsRef = this.db.list('items-quantity');
-    this.subscription.push(
+    await this.subscription.push(
       this.db.list('items-quantity',
         ref => ref.orderByChild('itemKey').equalTo(key)
       ).snapshotChanges().pipe(
@@ -96,11 +101,13 @@ export class ItemDataService implements OnDestroy {
         })
       ).subscribe()
     );
+    await this.logService.record(Action.Update, this.auth.loggingInAccount, `Updated item quantity: ${key}`);
   }
 
-  public deleteItem(key: string) {
-    this.deleteItemInfo(key);
-    this.deleteItemQuantity(key);
+  public async deleteItem(key: string) {
+    await this.deleteItemInfo(key);
+    await this.deleteItemQuantity(key);
+    await this.logService.record(Action.Delete, this.auth.loggingInAccount, `Deleted item: ${key}`);
   }
 
   private deleteItemInfo(key: string) {
