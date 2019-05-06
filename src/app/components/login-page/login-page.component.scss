@@ -1,0 +1,11 @@
+@import '../../shared/theme';
+
+.login-page {
+  position: relative;
+  top: 12em;
+
+  label{
+    color: $font-primary;
+    font-size: 2em;
+  }
+}

@@ -1,0 +1,55 @@
+<div class="item-quantity-section">
+  <div class="row item-quantity">
+    <div class="col-12">
+      <h2 *ngIf="name$ | async as name; else header">
+        {{ name }}
+      </h2>
+      <ng-template #header>
+        <h2>...</h2>
+      </ng-template>
+    </div>
+
+    <div class="col-12">
+      <div class="row" *ngIf="quantity$ | async as quantity; else loading">
+        <div class="form-group col-2">
+          <label for="item-s">S</label>
+          <input type="number" class="form-control" id="item-s" [value]="(quantity[0]) ? quantity[0].size.s : 0"
+            #quantityS>
+        </div>
+        <div class="form-group col-2">
+          <label for="item-m">M</label>
+          <input type="number" class="form-control" id="item-m" [value]="(quantity[0]) ? quantity[0].size.m : 0"
+            #quantityM>
+        </div>
+        <div class="form-group col-2">
+          <label for="item-l">L</label>
+          <input type="number" class="form-control" id="item-l" [value]="(quantity[0]) ? quantity[0].size.l : 0"
+            #quantityL>
+        </div>
+        <div class="form-group col-2">
+          <label for="item-xl">XL</label>
+          <input type="number" class="form-control" id="item-xl" [value]="(quantity[0]) ? quantity[0].size.xl : 0"
+            #quantityXL>
+        </div>
+        <div class="form-group col-2">
+          <label for="item-xxl">XXL</label>
+          <input type="number" class="form-control" id="item-xxl"
+            [value]="(quantity[0]) ? quantity[0].size.xxl : 0" #quantityXXL>
+        </div>
+        <div class="col-2">
+          <button class="btn btn-primary btn-submit" (click)="updateQuantity(quantity[0].key, {
+                    s: quantityS.value, m: quantityM.value, l: quantityL.value, xl: quantityXL.value, xxl: quantityXXL.value
+                  })">Submit</button>
+        </div>
+      </div>
+    </div>
+
+    <ng-template #loading>
+      <div class="col-12 text-center loading">
+        <div class="spinner-grow text-light" style="margin: 2em 0" role="status">
+          <span class="sr-only">Loading...</span>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

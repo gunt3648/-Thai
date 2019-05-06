@@ -1,0 +1,57 @@
+@import "../../shared/theme";
+
+.check-out-section {
+  background-color: $background-secondary;
+
+  margin-top: 1em;
+
+  .check-out {
+    padding: 1em;
+    height: 300px;
+
+    h2,
+    table {
+      color: $font-primary
+    }
+
+    table {
+      color: $font-primary;
+      height: 170px;
+    }
+
+    tbody {
+      display: block;
+      width: 100%;
+      overflow: auto;
+      height: 170px;
+    }
+
+    thead tr {
+      display: block;
+    }
+
+    th,
+    td {
+      padding: 5px;
+      text-align: left;
+      width: 200px;
+    }
+
+    .form-checkout,
+    .form-selector {
+      max-width: 100px;
+    }
+
+    .btn-checkout {
+      color: $font-primary;
+      background-color: $btn-primary;
+
+      position: relative;
+      left: 25em;
+    }
+
+    .btn-checkout:hover {
+      background-color: $btn-secondary;
+    }
+  }
+}

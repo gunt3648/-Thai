@@ -1,0 +1,47 @@
+<div class="item-table-section">
+  <div class="item-table">
+    <h2>
+      Item
+    </h2>
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">#</th>
+          <th scope="col">Item</th>
+          <th scope="col">Price</th>
+          <th scope="col">S</th>
+          <th scope="col">M</th>
+          <th scope="col">L</th>
+          <th scope="col">XL</th>
+          <th scope="col">XXL</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+        </tr>
+      </thead>
+      <tbody *ngIf="items$ | async as items; else loading">
+        <tr *ngFor="let item of items; let i = index">
+          <td>{{ i+1 }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.size.s }}</td>
+          <td>{{ item.size.m }}</td>
+          <td>{{ item.size.l }}</td>
+          <td>{{ item.size.xl }}</td>
+          <td>{{ item.size.xxl }}</td>
+          <td><button (click)="removeItem(item.key)" class="btn btn-danger"
+              *ngIf="this.currentRoute === '/item-management'">Remove</button>
+          </td>
+          <td><button (click)="selectItem(item)" class="btn btn-info btn-select">Select</button></td>
+        </tr>
+      </tbody>
+      <ng-template #loading>
+        <div class="text-center loading">
+          <div class="spinner-grow text-light" style="margin: 4em 0" role="status">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+      </ng-template>
+    </table>
+  </div>
+</div>

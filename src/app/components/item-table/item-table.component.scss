@@ -1,0 +1,33 @@
+@import "../../shared/theme";
+
+.item-table-section {
+  background-color: $background-secondary;
+
+  .item-table {
+    padding: 1em;
+    height: 350px;
+
+    h2,
+    table {
+      color: $font-primary
+    }
+
+    tbody {
+      display: block;
+      width: 100%;
+      overflow: auto;
+      height: 220px;
+    }
+
+    thead tr {
+      display: block;
+    }
+
+    th,
+    td {
+      padding: 5px;
+      text-align: left;
+      width: 200px;
+    }
+  }
+}

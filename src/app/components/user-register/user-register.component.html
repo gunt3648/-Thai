@@ -1,0 +1,27 @@
+<div class="user-register-section">
+  <div class="row user-register">
+    <div class="form-group col-3">
+      <label for="email-login">Email address</label>
+      <input type="email" class="form-control" id="email-login" placeholder="Enter email" #userEmail>
+    </div>
+    <div class="form-group col-3">
+      <label for="pass-login">Password</label>
+      <input type="password" class="form-control" id="pass-login" placeholder="Password" #userPassword>
+    </div>
+    <div class="form-group col-2">
+      <label for="name-login">Name</label>
+      <input type="text" class="form-control" id="name-login" placeholder="Name" #userName>
+    </div>
+    <div class="form-group col-2">
+      <label for="job-login">Job</label>
+      <td><select name="shirt" class="form-control form-selector" #userJob>
+          <option value="1">Employee</option>
+          <option value="2">Manager</option>
+        </select></td>
+    </div>
+    <div class="col-1">
+      <button class="btn btn-primary btn-submit"
+        (click)="register(userEmail.value, userPassword.value, userName.value, userJob.value)">Submit</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div class="user-info-section">
+  <div class="user-info" *ngIf="currentUser$ | async as currentUser; else loading">
+    <h2 class="user-name">
+      {{ currentUser.name }}
+    </h2>
+    <hr>
+    <h4>
+      {{ currentUser.email }}
+    </h4>
+    <p>
+      {{ (currentUser.authLevel == 2) ? 'Manager' : 'Employee' }}
+    </p>
+  </div>
+  <ng-template #loading>
+    <div class="text-center loading">
+      <div class="spinner-grow text-light" style="margin: 4em 0" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+    </div>
+  </ng-template>
+</div>
