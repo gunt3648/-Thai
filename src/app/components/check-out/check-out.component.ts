@@ -39,6 +39,7 @@ export class CheckOutComponent implements OnInit, OnDestroy {
 
   remove(item: Item) {
     this.checkoutTransfer.removeItem(item);
+    this.checkoutTransfer.removeItemToCal(item.name);
   }
 
   checkout() {
@@ -76,10 +77,13 @@ export class CheckOutComponent implements OnInit, OnDestroy {
     });
   }
 
-  addToCheckoutList(key: string, size: string, amount: string) {
+  addToCheckoutList(key: string, name: string, price: string, size: string, amount: string) {
     if (!this.keys.includes(key)) { this.keys.push(key); }
 
     // tslint:disable-next-line:radix
     this.checkoutList.set(key, { size: parseInt(size), amount: parseInt(amount) });
+
+    // tslint:disable-next-line:radix
+    this.checkoutTransfer.addItemToCal(name, size, parseInt(price), parseInt(amount));
   }
 }

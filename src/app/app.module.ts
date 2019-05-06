@@ -22,6 +22,7 @@ import { UserRegisterComponent } from './components/user-register/user-register.
 import { ItemManagementComponent } from './components/item-management/item-management.component';
 import { ItemRegisterComponent } from './components/item-register/item-register.component';
 import { ItemQuantityComponent } from './components/item-quantity/item-quantity.component';
+import { TotalPriceComponent } from './components/total-price/total-price.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { ItemQuantityComponent } from './components/item-quantity/item-quantity.
     UserRegisterComponent,
     ItemManagementComponent,
     ItemRegisterComponent,
-    ItemQuantityComponent
+    ItemQuantityComponent,
+    TotalPriceComponent
   ],
   imports: [
     AppRoutingModule,

@@ -1,0 +1,26 @@
+<div class="total-price-section">
+  <div class="total-price">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Amount</th>
+          <th scope="col">Price</th>
+        </tr>
+      </thead>
+      <tbody *ngIf="items$ | async as items">
+        <tr *ngFor="let item of items">
+          <td>{{ item.name + " " + item.size }}</td>
+          <td>{{ item.amount }}</td>
+          <td>{{ item.price * item.amount }}</td>
+        </tr>
+      </tbody>
+      <h2>
+        Total Price:
+      </h2>
+      <h1>
+        {{ totalPrice + " THB" }}
+      </h1>
+    </table>
+  </div>
+</div>

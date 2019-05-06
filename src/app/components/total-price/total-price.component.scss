@@ -1,12 +1,12 @@
 @import "../../shared/theme";
 
-.account-management-section {
+.total-price-section {
   margin-top: 1em;
   background-color: $background-secondary;
 
-  .account-management {
+  .total-price {
     padding: 1em;
-    height: 500px;
+    height: 460px;
 
     h2,
     table {
@@ -17,7 +17,7 @@
       display: block;
       width: 100%;
       overflow: auto;
-      height: 450px;
+      height: 300px;
     }
 
     thead tr {
