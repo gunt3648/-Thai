@@ -6,8 +6,8 @@
           <th scope="col">#</th>
           <th scope="col">Item</th>
           <th scope="col">Price</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
+          <th scope="col">Size</th>
+          <th scope="col">Amount</th>
           <th scope="col"></th>
         </tr>
       </thead>
@@ -16,19 +16,20 @@
           <td>{{ i+1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.price }}</td>
-          <td><select name="shirt" #sizeSelector>
+          <td><select name="shirt" class="form-control form-selector" #sizeSelector>
               <option value="1">S</option>
               <option value="2">M</option>
               <option value="3">L</option>
               <option value="4">XL</option>
               <option value="5">XXL</option>
-            </select>
-          <td><input type="number" placeholder="0"
-              (change)="addToCheckoutList(item.key, sizeSelector.value, checkoutForm.value)" #checkoutForm></td>
-          <td><button class="btn btn-primary" (click)="remove(item)">remove</button></td>
+            </select></td>
+          <td><input type="number" placeholder="0" min="0" class="form-control form-checkout"
+              (change)="addToCheckoutList(item.key, item.name, item.price, sizeSelector.value, checkoutForm.value)"
+              #checkoutForm></td>
+          <td><button class="btn btn-danger" (click)="remove(item)">remove</button></td>
         </tr>
       </tbody>
-      <button class="btn btn-primary" (click)="checkout()">Submit</button>
     </table>
+    <button class="btn btn-checkout" (click)="checkout()">Check out</button>
   </div>
 </div>

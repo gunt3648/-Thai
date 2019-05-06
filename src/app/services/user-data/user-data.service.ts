@@ -15,18 +15,21 @@ export class UserDataService {
     private db: AngularFireDatabase
   ) { }
 
-  public getUserDataByEmail(email: string): Observable<UserInformation[]> {
+  public getUserDataByEmail(email: string): Observable<UserInformation> {
     return this.db.list<UserInformation>('users',
       ref => ref.orderByChild('email').equalTo(email)
     )
-      .valueChanges();
+      .valueChanges()
+      .pipe(
+        map(items => items[0])
+      );
   }
 
   public getUserAuthLevelByEmail(email: string): Observable<AuthLevel> {
     console.log('Getting auth level of', email);
     return this.getUserDataByEmail(email).pipe(
       map(result => {
-        return result[0].authLevel;
+        return result.authLevel;
       })
     );
   }

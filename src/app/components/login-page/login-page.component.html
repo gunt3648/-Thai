@@ -1,5 +1,6 @@
 <div class="container">
   <div class="row">
+
     <div class="login-page col-6 ml-auto mr-auto">
       <div class="form-group">
         <label for="email-login">Email address</label>
@@ -9,7 +10,12 @@
         <label for="pass-login">Password</label>
         <input type="password" class="form-control" id="pass-login" placeholder="Password" #userPassword>
       </div>
-      <button class="btn btn-primary" (click)="login(userEmail.value, userPassword.value)">Submit</button>
+      <br>
+      <button class="btn btn-light float-right mr-3" (click)="login(userEmail.value, userPassword.value)">
+        <span *ngIf="clickedLogin" class="spinner-grow spinner-grow-sm" role="status" aria-hidden="true"></span>
+        Submit
+      </button>
     </div>
+    
   </div>
 </div>
