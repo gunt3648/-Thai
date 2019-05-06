@@ -3,7 +3,7 @@ import { AngularFireDatabase } from 'angularfire2/database';
 import { Observable, Subscription } from 'rxjs';
 
 import { ItemTransferService } from 'src/app/services/item-transfer/item-transfer.service';
-import { QuantityBySize } from 'src/app/interfaces/item/item';
+import { QuantityBySize, Item } from 'src/app/interfaces/item/item';
 import { ItemDataService } from 'src/app/services/item-data/item-data.service';
 
 @Component({
@@ -16,7 +16,7 @@ export class ItemQuantityComponent implements OnInit, OnDestroy {
   private subscription: Subscription[] = [];
 
   public name$: Observable<string>;
-  public quantity$: Observable<QuantityBySize[]>;
+  public quantity$: Observable<any[]>;
 
   private key: string;
 
@@ -58,7 +58,8 @@ export class ItemQuantityComponent implements OnInit, OnDestroy {
       xl: (quantity.xl > 0) ? quantity.xl : 0,
       xxl: (quantity.xxl > 0) ? quantity.xxl : 0
     };
-    this.itemData.updateItemQuantity(key, q);
+    // console.log(q);
+    this.itemData.updateItemInfo(key, {size: q});
   }
 
 }

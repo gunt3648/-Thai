@@ -35,11 +35,11 @@ export class ItemDataService implements OnDestroy {
       price,
       stock,
       createdBy: this.auth.loggingInAccount,
-      createdDate: new Date().toLocaleString()
+      createdDate: new Date().toLocaleString(),
+      size: { s: 0, m: 0, l: 0, xl: 0, xxl: 0 }
     };
     await itemsRef.push(itemInformation);
     await this.updateLastItemKey();
-    await this.initItemQuantityTemplate();
   }
 
   private get lastItemKey(): Observable<any> {
@@ -63,50 +63,14 @@ export class ItemDataService implements OnDestroy {
     );
   }
 
-  private initItemQuantityTemplate() {
-    const itemsRef = this.db.list('items-quantity');
-    this.subscription.push(
-      this.lastItemKey.pipe(
-        take(1),
-        map(items => {
-          const itemQuantity: QuantityBySize = {
-            itemKey: items[0].key,
-            s: 0,
-            m: 0,
-            l: 0,
-            xl: 0,
-            xxl: 0
-          };
-          itemsRef.push(itemQuantity);
-        })
-      ).subscribe()
-    );
-  }
-
-  public async updateItemInfo(key: string, itemInfo: Item) {
+  public async updateItemInfo(key: string, itemInfo: Item | any) {
     const itemsRef = this.db.list('items-info');
     await itemsRef.update(key, itemInfo);
     await this.logService.record(Action.Update, this.auth.loggingInAccount, `Updated item: ${key}`);
   }
 
-  public async updateItemQuantity(key: string, itemQuantity: QuantityBySize) {
-    const itemsRef = this.db.list('items-quantity');
-    await this.subscription.push(
-      this.db.list('items-quantity',
-        ref => ref.orderByChild('itemKey').equalTo(key)
-      ).snapshotChanges().pipe(
-        take(1),
-        map(items => {
-          itemsRef.update(items[0].key, itemQuantity);
-        })
-      ).subscribe()
-    );
-    await this.logService.record(Action.Update, this.auth.loggingInAccount, `Updated item quantity: ${key}`);
-  }
-
   public async deleteItem(key: string) {
     await this.deleteItemInfo(key);
-    await this.deleteItemQuantity(key);
     await this.logService.record(Action.Delete, this.auth.loggingInAccount, `Deleted item: ${key}`);
   }
 
@@ -115,29 +79,31 @@ export class ItemDataService implements OnDestroy {
     itemsRef.remove();
   }
 
-  private deleteItemQuantity(key: string) {
-    const itemsRef = this.db.list('items-quantity');
-    this.subscription.push(
-      this.db.list('items-quantity',
-        ref => ref.orderByChild('itemKey').equalTo(key)
-      ).snapshotChanges().pipe(
-        take(1),
-        map(items => {
-          itemsRef.remove(items[0].key);
-        })
-      ).subscribe()
-    );
-  }
-
   public getAllItems(): Observable<Item[]> {
     return this.db.list<Item>('items-info',
       ref => ref.orderByChild('name')
     ).valueChanges();
   }
 
-  public getQuantityByKey(key: string): Observable<QuantityBySize[]> {
-    return this.db.list<QuantityBySize>('items-quantity', ref =>
-      ref.orderByChild('itemKey').equalTo(key)
-    ).valueChanges();
+  public getQuantityByKey(key: string) {
+    return this.db.list('items-info',
+      ref => ref.orderByChild('key').equalTo(key)
+    ).valueChanges().pipe(
+      map(items =>
+        items.map((item: any) => {
+          return {
+            key: item.key,
+            size: item.size
+          };
+        })
+      )
+    );
+  }
+
+  public checkout(key: string, amount: QuantityBySize) {
+    const itemsRef = this.db.list('items-quantity');
+    this.subscription.push(
+
+    );
   }
 }

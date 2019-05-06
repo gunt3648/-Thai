@@ -5,16 +5,30 @@
         <tr>
           <th scope="col">#</th>
           <th scope="col">Item</th>
-          <th scope="col">Prize</th>
+          <th scope="col">Price</th>
+          <th scope="col"></th>
+          <th scope="col"></th>
+          <th scope="col"></th>
         </tr>
       </thead>
-      <tbody *ngFor="let item of mock; let i = index">
-        <tr>
+      <tbody *ngIf="showItems$ | async as items">
+        <tr *ngFor="let item of items; let i = index">
           <td>{{ i+1 }}</td>
-          <td>{{ item.item }}</td>
-          <td>{{ item.prize }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.price }}</td>
+          <td><select name="shirt" #sizeSelector>
+              <option value="1">S</option>
+              <option value="2">M</option>
+              <option value="3">L</option>
+              <option value="4">XL</option>
+              <option value="5">XXL</option>
+            </select>
+          <td><input type="number" placeholder="0"
+              (change)="addToCheckoutList(item.key, sizeSelector.value, checkoutForm.value)" #checkoutForm></td>
+          <td><button class="btn btn-primary" (click)="remove(item)">remove</button></td>
         </tr>
       </tbody>
+      <button class="btn btn-primary" (click)="checkout()">Submit</button>
     </table>
   </div>
 </div>

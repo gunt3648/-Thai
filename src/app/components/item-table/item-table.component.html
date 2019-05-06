@@ -9,6 +9,11 @@
           <th scope="col">#</th>
           <th scope="col">Item</th>
           <th scope="col">Price</th>
+          <th scope="col">S</th>
+          <th scope="col">M</th>
+          <th scope="col">L</th>
+          <th scope="col">XL</th>
+          <th scope="col">XXL</th>
           <th scope="col"></th>
           <th scope="col"></th>
         </tr>
@@ -18,8 +23,14 @@
           <td>{{ i+1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.price }}</td>
-          <td><button (click)="removeItem(item.key)">remove</button></td>
-          <td><button (click)="selectItem(item.key, item.name)">select</button></td>
+          <td>{{ item.size.s }}</td>
+          <td>{{ item.size.m }}</td>
+          <td>{{ item.size.l }}</td>
+          <td>{{ item.size.xl }}</td>
+          <td>{{ item.size.xxl }}</td>
+          <td><button (click)="removeItem(item.key)" *ngIf="this.currentRoute === '/item-management'">remove</button>
+          </td>
+          <td><button (click)="selectItem(item)">select</button></td>
         </tr>
       </tbody>
     </table>
