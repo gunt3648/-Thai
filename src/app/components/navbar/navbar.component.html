@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+<nav class="navbar navbar-expand-sm navbar-dark">
   <div class="container">
     <a class="navbar-brand" [routerLink]="['/home']">@thai</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
@@ -20,7 +20,7 @@
         </li>
       </ul>
     </div>
-    <button *ngIf="isLoggedIn" (click)="logout()">
+    <button *ngIf="isLoggedIn" class="btn btn-danger" (click)="logout()">
       Logout
     </button>
   </div>

@@ -9,6 +9,8 @@ import { AuthService } from './../../services/auth/auth.service';
   styleUrls: ['./login-page.component.scss']
 })
 export class LoginPageComponent implements OnInit {
+  public clickedLogin = false;
+
   constructor(
     private auth: AuthService,
     private router: Router
@@ -21,9 +23,11 @@ export class LoginPageComponent implements OnInit {
   }
 
   login(email: string, pass: string) {
+    this.clickedLogin = true;
     if (email && pass) {
       this.auth.login(email, pass);
     } else {
+      this.clickedLogin = false;
       alert('Email and password are required!');
     }
   }

@@ -1,0 +1,20 @@
+@import '../../shared/theme';
+
+.item-register-section {
+  margin-top: 1em;
+  background-color: $background-secondary;
+
+  .item-register {
+    margin: 1em;
+
+    label {
+      color: $font-primary;
+    }
+
+    .btn-submit {
+      position: relative;
+      top: 2em;
+      
+    }
+  }
+}

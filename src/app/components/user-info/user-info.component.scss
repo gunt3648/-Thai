@@ -6,8 +6,14 @@
   .user-info {
     padding: 1em;
 
-    h2 {
-      color: $font-primary
+    h2,
+    h4,
+    p {
+      color: $font-primary;
+    }
+
+    hr {
+      background-color: $font-primary;
     }
   }
 }

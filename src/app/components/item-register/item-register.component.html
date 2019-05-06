@@ -1,18 +1,20 @@
-<div class="row">
-  <div class="form-group col-4">
-    <label for="item-name">name</label>
-    <input type="text" class="form-control" id="item-name" placeholder="name" #itemName>
-  </div>
-  <div class="form-group col-3">
-    <label for="item-price">price</label>
-    <input type="number" class="form-control" id="item-price" placeholder="price" #itemPrice>
-  </div>
-  <div class="form-group col-3">
-    <label for="item-stock">stock</label>
-    <input type="text" class="form-control" id="item-stock" placeholder="stock" #itemStock>
-  </div>
-  <div class="col-1">
-    <button class="btn btn-primary"
-      (click)="addItem(itemName.value, itemPrice.value, itemStock.value)">Submit</button>
+<div class="item-register-section">
+  <div class="row item-register">
+    <div class="form-group col-4">
+      <label for="item-name">name</label>
+      <input type="text" class="form-control" id="item-name" placeholder="name" #itemName>
+    </div>
+    <div class="form-group col-3">
+      <label for="item-price">price</label>
+      <input type="number" class="form-control" id="item-price" placeholder="price" #itemPrice>
+    </div>
+    <div class="form-group col-3">
+      <label for="item-stock">stock</label>
+      <input type="text" class="form-control" id="item-stock" placeholder="stock" #itemStock>
+    </div>
+    <div class="col-1">
+      <button class="btn btn-primary btn-submit"
+        (click)="addItem(itemName.value, itemPrice.value, itemStock.value)">Submit</button>
+    </div>
   </div>
 </div>
