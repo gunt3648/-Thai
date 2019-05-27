@@ -1,6 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 
 import { ItemDataService } from './../../services/item-data/item-data.service';
+import { StoreDataService } from '../../services/store-data/store-data.service';
+import { Store } from 'src/app/interfaces/store/store';
 
 @Component({
   selector: 'app-item-register',
@@ -9,15 +12,23 @@ import { ItemDataService } from './../../services/item-data/item-data.service';
 })
 export class ItemRegisterComponent implements OnInit {
 
+  public store$: Observable<Store[]>;
+
   constructor(
+    private storeData: StoreDataService,
     private itemData: ItemDataService
   ) { }
 
   ngOnInit() {
+    this.initStore();
   }
 
-  addItem(name: string, price: number, stock: string) {
-    this.itemData.addItemToDatabase(name, price, stock);
+  initStore() {
+    this.store$ = this.storeData.getStoreInfo();
+  }
+
+  addItem(name: string, price: number, store: string) {
+    this.itemData.addItemToDatabase(name, price, store);
   }
 
 }

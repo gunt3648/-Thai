@@ -9,11 +9,13 @@
           <th scope="col">#</th>
           <th scope="col">Item</th>
           <th scope="col">Price</th>
-          <th scope="col">S</th>
-          <th scope="col">M</th>
-          <th scope="col">L</th>
-          <th scope="col">XL</th>
-          <th scope="col">XXL</th>
+          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">S</th>
+          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">M</th>
+          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">L</th>
+          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">XL</th>
+          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">XXL</th>
+          <th *ngIf="this.currentRoute === '/item-management'" scope="col">Quantity</th>
+          <th *ngIf="this.currentRoute === '/item-management'" scope="col">Store</th>
           <th scope="col"></th>
           <th scope="col"></th>
           <th scope="col"></th>
@@ -24,11 +26,14 @@
           <td>{{ i+1 }}</td>
           <td>{{ item.name }}</td>
           <td>{{ item.price }}</td>
-          <td>{{ item.size.s }}</td>
-          <td>{{ item.size.m }}</td>
-          <td>{{ item.size.l }}</td>
-          <td>{{ item.size.xl }}</td>
-          <td>{{ item.size.xxl }}</td>
+          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.s }}</td>
+          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.m }}</td>
+          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.l }}</td>
+          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.xl }}</td>
+          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.xxl }}</td>
+          <td *ngIf="this.currentRoute === '/item-management'">
+            {{ getQuantity(item.size) }}</td>
+          <td *ngIf="this.currentRoute === '/item-management'">{{ item.stock }}</td>
           <td><button (click)="removeItem(item.key)" class="btn btn-danger"
               *ngIf="this.currentRoute === '/item-management'">Remove</button>
           </td>
