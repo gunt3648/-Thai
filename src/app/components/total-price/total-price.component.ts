@@ -1,6 +1,6 @@
 import { Size } from 'src/app/interfaces/item/item';
 import { map } from 'rxjs/operators';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 
 import { CheckoutTransferService } from './../../services/checkout-transfer/checkout-transfer.service';
 import { Observable } from 'rxjs';
@@ -10,7 +10,7 @@ import { Observable } from 'rxjs';
   templateUrl: './total-price.component.html',
   styleUrls: ['./total-price.component.scss']
 })
-export class TotalPriceComponent implements OnInit {
+export class TotalPriceComponent implements OnInit, OnDestroy {
 
   public items$: Observable<any[]>;
   public totalPrice: number;
@@ -21,6 +21,10 @@ export class TotalPriceComponent implements OnInit {
 
   ngOnInit() {
     this.initItems();
+  }
+
+  ngOnDestroy() {
+    this.checkoutTransfer.reset();
   }
 
   initItems() {

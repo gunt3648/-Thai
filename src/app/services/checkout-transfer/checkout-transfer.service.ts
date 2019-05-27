@@ -24,7 +24,10 @@ export class CheckoutTransferService {
 
   public reset() {
     this.itemsArr = [];
-    this.itemsToShow.next(null);
+    this.itemsToShow.next([]);
+
+    this.itemsToCalArr = [];
+    this.itemsToCal.next([]);
   }
 
   public addItem(item: Item) {
