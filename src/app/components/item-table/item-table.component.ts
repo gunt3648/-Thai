@@ -55,4 +55,9 @@ export class ItemTableComponent implements OnInit, OnDestroy {
     return this.route.url;
   }
 
+  public getQuantity(item: any) {
+    // tslint:disable-next-line:radix
+    return parseInt(item.s) + parseInt(item.m) + parseInt(item.l) + parseInt(item.xl) + parseInt(item.xxl);
+  }
+
 }

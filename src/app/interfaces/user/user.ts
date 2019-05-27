@@ -8,6 +8,6 @@ export interface UserInformation {
   key?: string;
   uid?: string;
 
-  createDate: Date;
-  createBy?: string;
+  createdDate: Date;
+  createdBy?: string;
 }
