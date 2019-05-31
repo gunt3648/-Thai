@@ -1,0 +1,21 @@
+<div class="store-register-section">
+  <div class="row store-register">
+    <div class="form-group col-4">
+      <label for="store-name">name</label>
+      <input type="text" class="form-control" id="store-name" placeholder="name" #storeName>
+    </div>
+    <div class="form-group col-3">
+      <label for="store-location">location</label>
+      <input type="text" class="form-control" id="store-location" placeholder="location" #storeLocation>
+    </div>
+    <div class="form-group col-3">
+      <label for="store-contact">contact</label>
+      <input type="text" class="form-control" id="store-contact" placeholder="contact" #storeContact>
+    </div>
+
+    <div class="col-1">
+      <button class="btn btn-primary btn-submit"
+        (click)="addStore(storeName.value, storeLocation.value, storeContact.value)">Submit</button>
+    </div>
+  </div>
+</div>

@@ -41,6 +41,9 @@ MIT
 @angular/fire/storage
 MIT
 
+@angular/forms
+MIT
+
 @angular/platform-browser
 MIT
 

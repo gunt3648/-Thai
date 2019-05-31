@@ -121,8 +121,8 @@ export class AuthService implements OnDestroy {
       email,
       name,
       authLevel: (authLevel === 1) ? AuthLevel.Employee : AuthLevel.Manager,
-      createDate: new Date(),
-      createBy: this.loggingInAccount
+      createdDate: new Date(),
+      createdBy: this.loggingInAccount
     };
     itemsRef.push(userInformation);
   }

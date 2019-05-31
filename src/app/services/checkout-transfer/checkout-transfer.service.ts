@@ -24,7 +24,10 @@ export class CheckoutTransferService {
 
   public reset() {
     this.itemsArr = [];
-    this.itemsToShow.next(null);
+    this.itemsToShow.next([]);
+
+    this.itemsToCalArr = [];
+    this.itemsToCal.next([]);
   }
 
   public addItem(item: Item) {
@@ -42,9 +45,10 @@ export class CheckoutTransferService {
     }
   }
 
-  public addItemToCal(name: string, size: string, price: number, amount: number) {
-    const index = this.isItemsToCalIncludes(name);
+  public addItemToCal(key: string, name: string, size: string, price: number, amount: number) {
+    const index = this.isItemsToCalIncludes(key);
     const item = {
+      key,
       name,
       size,
       price,
@@ -68,9 +72,9 @@ export class CheckoutTransferService {
     }
   }
 
-  private isItemsToCalIncludes(name: string): number {
+  private isItemsToCalIncludes(key: string): number {
     let isIncludes = -1;
-    this.itemsToCalArr.forEach((item, index) => { if (item.name === name) { isIncludes = index; } });
+    this.itemsToCalArr.forEach((item, index) => { if (item.key === key) { isIncludes = index; } });
     return isIncludes;
   }
 }

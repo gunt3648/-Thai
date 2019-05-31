@@ -1,11 +1,11 @@
 <nav class="navbar navbar-expand-sm navbar-dark">
   <div class="container">
-    <a class="navbar-brand" [routerLink]="['/home']">@thai</a>
+    <a class="navbar-brand" [routerLink]="['/home']">@Thai</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="collapsibleNavbar">
-      <ul class="navbar-nav">
+      <ul class="navbar-nav mr-auto">
         <li class="nav-item">
           <a class="nav-link" [routerLink]="['/home']">Check out</a>
         </li>
@@ -18,6 +18,9 @@
         <li class="nav-item" *ngIf="isManager">
           <a class="nav-link" [routerLink]="['/item-management']">Item Management</a>
         </li>
+        <li class="nav-item" *ngIf="isManager">
+            <a class="nav-link" [routerLink]="['/store-management']">Store Management</a>
+          </li>
       </ul>
     </div>
     <button *ngIf="isLoggedIn" class="btn btn-danger" (click)="logout()">

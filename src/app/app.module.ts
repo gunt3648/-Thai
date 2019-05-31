@@ -1,5 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { FormsModule } from '@angular/forms';
 import { AngularFireModule } from '@angular/fire';
 import { HttpClientModule } from '@angular/common/http';
 import { AngularFireAuthModule } from 'angularfire2/auth';
@@ -23,6 +24,8 @@ import { ItemManagementComponent } from './components/item-management/item-manag
 import { ItemRegisterComponent } from './components/item-register/item-register.component';
 import { ItemQuantityComponent } from './components/item-quantity/item-quantity.component';
 import { TotalPriceComponent } from './components/total-price/total-price.component';
+import { StoreManagementComponent } from './components/store-management/store-management.component';
+import { StoreRegisterComponent } from './components/store-register/store-register.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import { TotalPriceComponent } from './components/total-price/total-price.compon
     ItemManagementComponent,
     ItemRegisterComponent,
     ItemQuantityComponent,
-    TotalPriceComponent
+    TotalPriceComponent,
+    StoreManagementComponent,
+    StoreRegisterComponent
   ],
   imports: [
     AppRoutingModule,
@@ -49,7 +54,8 @@ import { TotalPriceComponent } from './components/total-price/total-price.compon
     AngularFireStorageModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    HttpClientModule
+    HttpClientModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

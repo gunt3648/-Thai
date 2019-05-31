@@ -1,3 +1,4 @@
+import { KeysService } from './../keys/keys.service';
 import { LogService } from './../log/log.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
@@ -18,7 +19,8 @@ export class ItemDataService implements OnDestroy {
   constructor(
     private db: AngularFireDatabase,
     private auth: AuthService,
-    private logService: LogService
+    private logService: LogService,
+    private keysService: KeysService
   ) { }
 
   ngOnDestroy() {
@@ -38,29 +40,10 @@ export class ItemDataService implements OnDestroy {
       createdDate: new Date().toLocaleString(),
       size: { s: 0, m: 0, l: 0, xl: 0, xxl: 0 }
     };
+    // console.log('adding item to db..', itemInformation);
     await itemsRef.push(itemInformation);
-    await this.updateLastItemKey();
-  }
-
-  private get lastItemKey(): Observable<any> {
-    return this.db.list<Item>('items-info',
-      ref => ref.limitToLast(1)
-    ).snapshotChanges();
-  }
-
-  private updateLastItemKey() {
-    const itemsRef = this.db.list('items-info');
-    this.subscription.push(
-      this.lastItemKey.pipe(
-        take(1),
-        map(items => {
-          itemsRef.update(items[0].key, {
-            key: items[0].key
-          });
-          this.logService.record(Action.Create, this.auth.loggingInAccount, `Created item: ${items[0].key}`);
-        })
-      ).subscribe()
-    );
+    const obs$ = this.keysService.updateLastItemKey('items-info');
+    await this.subscription.push(obs$.subscribe());
   }
 
   public async updateItemInfo(key: string, itemInfo: Item | any) {
@@ -69,20 +52,23 @@ export class ItemDataService implements OnDestroy {
     await this.logService.record(Action.Update, this.auth.loggingInAccount, `Updated item: ${key}`);
   }
 
-  public async deleteItem(key: string) {
-    await this.deleteItemInfo(key);
-    await this.logService.record(Action.Delete, this.auth.loggingInAccount, `Deleted item: ${key}`);
-  }
-
-  private deleteItemInfo(key: string) {
-    const itemsRef = this.db.list(`items-info/${key}`);
-    itemsRef.remove();
+  public deleteItem(key: string) {
+    this.keysService.deleteItemInfo('items-info', key);
   }
 
   public getAllItems(): Observable<Item[]> {
     return this.db.list<Item>('items-info',
       ref => ref.orderByChild('name')
     ).valueChanges();
+  }
+
+  public getNameByKey(key: string) {
+    return this.db.list('items-info',
+      ref => ref.orderByChild('key').equalTo(key)
+    ).valueChanges().pipe(
+      take(1),
+      map(result => result.map((res: any) => res.name))
+    );
   }
 
   public getQuantityByKey(key: string) {
@@ -105,5 +91,9 @@ export class ItemDataService implements OnDestroy {
     this.subscription.push(
 
     );
+  }
+
+  public recordTransaction(key: string, name: string, size: string, amount: string, price: string, store: string) {
+    this.logService.recordTransaction(key, name, size, amount, price, store);
   }
 }

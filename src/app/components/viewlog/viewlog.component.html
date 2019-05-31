@@ -3,24 +3,27 @@
 <div class="view-log-section">
   <div class="view-log">
     <div class="container">
-      <h2>Viewlog</h2>
+      <h2>Total today</h2>
       <table class="table">
         <thead>
           <tr>
-            <th>Actor</th>
-            <th>Action</th>
-            <th>Time</th>
-            <th>Message</th>
+            <th>Store</th>
+            <th>Item</th>
+            <th>Size</th>
+            <th>Amount</th>
+            <th>Price</th>
           </tr>
         </thead>
         <tbody *ngIf="log$ | async as logs; else loading">
           <tr *ngFor="let log of logs">
-            <td>{{ log.actor }}</td>
-            <td>{{ log.act }}</td>
-            <td>{{ log.time }}</td>
-            <td>{{ log.msg }}</td>
+            <td>{{ log.store }}</td>
+            <td>{{ log.name }}</td>
+            <td>{{ getSize(log.size) }}</td>
+            <td>{{ log.amount }}</td>
+            <td>{{ log.price }}</td>
           </tr>
         </tbody>
+        <h2>Today total: {{ getTotal() }}</h2>
       </table>
       <ng-template #loading>
         <div class="text-center loading">
