@@ -88,6 +88,6 @@ export class CheckOutComponent implements OnInit, OnDestroy {
     this.checkoutList.set(key, { name, size: parseInt(size), amount: parseInt(amount), price: parseInt(price), store });
 
     // tslint:disable-next-line:radix
-    this.checkoutTransfer.addItemToCal(name, size, parseInt(price), parseInt(amount));
+    this.checkoutTransfer.addItemToCal(key, name, size, parseInt(price), parseInt(amount));
   }
 }
