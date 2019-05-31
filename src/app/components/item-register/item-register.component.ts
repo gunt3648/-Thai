@@ -13,6 +13,7 @@ import { Store } from 'src/app/interfaces/store/store';
 export class ItemRegisterComponent implements OnInit {
 
   public store$: Observable<Store[]>;
+  public selectedOption: any;
 
   constructor(
     private storeData: StoreDataService,
