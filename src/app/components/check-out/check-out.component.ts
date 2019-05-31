@@ -17,7 +17,7 @@ export class CheckOutComponent implements OnInit, OnDestroy {
   private subscription: Subscription[] = [];
 
   private keys: string[] = [];
-  private checkoutList: Map<string, { size: number, amount: number }> = new Map();
+  private checkoutList: Map<string, { name: string, size: number, amount: number, price: number, store: string }> = new Map();
 
   constructor(
     private itemData: ItemDataService,
@@ -47,7 +47,7 @@ export class CheckOutComponent implements OnInit, OnDestroy {
       this.subscription.push(
         this.itemData.getQuantityByKey(key).pipe(
           take(1),
-          map(i => {
+          map(async i => {
             const items = this.checkoutList.get(key);
             const itemToUpdate = {
               s: i[0].size.s,
@@ -70,18 +70,22 @@ export class CheckOutComponent implements OnInit, OnDestroy {
               console.log('Check out failed on: ', key);
             }
 
-            this.itemData.updateItemInfo(key, {size: itemToUpdate});
+            await this.itemData.updateItemInfo(key, { size: itemToUpdate });
+            await this.itemData.recordTransaction
+              (key, items.name, items.size + '', items.amount + '', items.price * items.amount + '', items.store);
           })
         ).subscribe()
       );
     });
+    this.checkoutTransfer.reset();
   }
 
-  addToCheckoutList(key: string, name: string, price: string, size: string, amount: string) {
+  addToCheckoutList(key: string, name: string, price: string, size: string, amount: string, store: string) {
+    // console.log('pushing..', key, name, price, size, amount);
     if (!this.keys.includes(key)) { this.keys.push(key); }
 
     // tslint:disable-next-line:radix
-    this.checkoutList.set(key, { size: parseInt(size), amount: parseInt(amount) });
+    this.checkoutList.set(key, { name, size: parseInt(size), amount: parseInt(amount), price: parseInt(price), store });
 
     // tslint:disable-next-line:radix
     this.checkoutTransfer.addItemToCal(name, size, parseInt(price), parseInt(amount));

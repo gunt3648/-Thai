@@ -3,7 +3,7 @@ import { LogService } from './../log/log.service';
 import { Injectable, OnDestroy } from '@angular/core';
 import { AngularFireDatabase } from '@angular/fire/database';
 import { Subscription, Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
+import { map, take } from 'rxjs/operators';
 
 import { AuthService } from './../auth/auth.service';
 import { Item, QuantityBySize } from 'src/app/interfaces/item/item';
@@ -40,8 +40,10 @@ export class ItemDataService implements OnDestroy {
       createdDate: new Date().toLocaleString(),
       size: { s: 0, m: 0, l: 0, xl: 0, xxl: 0 }
     };
+    // console.log('adding item to db..', itemInformation);
     await itemsRef.push(itemInformation);
-    await this.keysService.updateLastItemKey('items-info');
+    const obs$ = this.keysService.updateLastItemKey('items-info');
+    await this.subscription.push(obs$.subscribe());
   }
 
   public async updateItemInfo(key: string, itemInfo: Item | any) {
@@ -58,6 +60,15 @@ export class ItemDataService implements OnDestroy {
     return this.db.list<Item>('items-info',
       ref => ref.orderByChild('name')
     ).valueChanges();
+  }
+
+  public getNameByKey(key: string) {
+    return this.db.list('items-info',
+      ref => ref.orderByChild('key').equalTo(key)
+    ).valueChanges().pipe(
+      take(1),
+      map(result => result.map((res: any) => res.name))
+    );
   }
 
   public getQuantityByKey(key: string) {
@@ -80,5 +91,9 @@ export class ItemDataService implements OnDestroy {
     this.subscription.push(
 
     );
+  }
+
+  public recordTransaction(key: string, name: string, size: string, amount: string, price: string, store: string) {
+    this.logService.recordTransaction(key, name, size, amount, price, store);
   }
 }

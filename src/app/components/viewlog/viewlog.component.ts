@@ -1,5 +1,4 @@
 import { LogService } from './../../services/log/log.service';
-import { Log } from './../../interfaces/log/log';
 import { Observable } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 
@@ -10,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ViewLogComponent implements OnInit {
 
-  public log$: Observable<Log[]>;
+  public log$: Observable<any>;
 
   constructor(
     private logService: LogService
@@ -21,7 +20,7 @@ export class ViewLogComponent implements OnInit {
   }
 
   initLog() {
-    this.log$ = this.logService.getAllLog();
+    this.log$ = this.logService.getTodayTransaction();
   }
 
 }

@@ -25,10 +25,17 @@ export class LogService {
     });
   }
 
+  public recordTransaction(key: string, name: string, size: string, amount: string, price: string, store: string) {
+    const day = new Date();
+    const itemsRef = this.db.list(`transactions/${day.getFullYear()}/${day.getMonth() + 1}/${day.getDate()}`);
+    // console.log({ key, size, amount, price });
+    return itemsRef.push({ key, name, size, amount, price, store });
+  }
+
   public getAllLog(): Observable<any[]> {
     return this.db.list<Log>('logs').valueChanges().pipe(
       map((result: Log[]) =>
-        result.map( (res: Log) => {
+        result.map((res: Log) => {
           return {
             act: this.convertEnum(res.act),
             actor: res.actor,
@@ -38,6 +45,12 @@ export class LogService {
         })
       )
     );
+  }
+
+  public getTodayTransaction(): Observable<any[]> {
+    const day = new Date();
+    return this.db.list(`transactions/${day.getFullYear()}/${day.getMonth() + 1}/${day.getDate()}`)
+      .valueChanges();
   }
 
   private convertEnum(val: any): string {
