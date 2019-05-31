@@ -24,7 +24,7 @@
               <option value="5">XXL</option>
             </select></td>
           <td><input type="number" placeholder="0" min="0" class="form-control form-checkout"
-              (change)="addToCheckoutList(item.key, item.name, item.price, sizeSelector.value, checkoutForm.value)"
+              (change)="addToCheckoutList(item.key, item.name, item.price, sizeSelector.value, checkoutForm.value, item.stock)"
               #checkoutForm></td>
           <td><button class="btn btn-danger" (click)="remove(item)">remove</button></td>
         </tr>
