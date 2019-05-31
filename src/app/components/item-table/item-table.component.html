@@ -1,52 +1,59 @@
 <div class="item-table-section">
-  <div class="item-table">
+  <div class="item-table" style="padding-top:0px;">
     <h2>
       Item
     </h2>
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th scope="col">#</th>
-          <th scope="col">Item</th>
-          <th scope="col">Price</th>
-          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">S</th>
-          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">M</th>
-          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">L</th>
-          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">XL</th>
-          <th *ngIf="this.currentRoute !== '/item-management'" scope="col">XXL</th>
-          <th *ngIf="this.currentRoute === '/item-management'" scope="col">Quantity</th>
-          <th *ngIf="this.currentRoute === '/item-management'" scope="col">Store</th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-          <th scope="col"></th>
-        </tr>
-      </thead>
-      <tbody *ngIf="items$ | async as items; else loading">
-        <tr *ngFor="let item of items; let i = index">
-          <td>{{ i+1 }}</td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.price }}</td>
-          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.s }}</td>
-          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.m }}</td>
-          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.l }}</td>
-          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.xl }}</td>
-          <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.xxl }}</td>
-          <td *ngIf="this.currentRoute === '/item-management'">
-            {{ getQuantity(item.size) }}</td>
-          <td *ngIf="this.currentRoute === '/item-management'">{{ item.stock }}</td>
-          <td><button (click)="removeItem(item.key)" class="btn btn-danger"
-              *ngIf="this.currentRoute === '/item-management'">Remove</button>
-          </td>
-          <td><button (click)="selectItem(item)" class="btn btn-info btn-select">Select</button></td>
-        </tr>
-      </tbody>
-      <ng-template #loading>
-        <div class="text-center loading">
-          <div class="spinner-grow text-light" style="margin: 4em 0" role="status">
-            <span class="sr-only">Loading...</span>
+    <ul *ngIf="store$ | async as stores; else loading" class="nav nav-tabs" style="background-color: white">
+      <div *ngFor="let store of stores; let i = index">
+        <li class="nav-item nav-link "><a data-toggle="tab" (click)="compItem(store.name)">{{ store.name }}</a></li>
+      </div>
+    </ul>
+    <div class="tab-content" *ngIf="store$ | async as stores; else loading">
+      <table class="table table-striped" *ngFor="let store of stores; let i = index">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Item</th>
+            <th scope="col">Price</th>
+            <th *ngIf="this.currentRoute !== '/item-management'" scope="col">S</th>
+            <th *ngIf="this.currentRoute !== '/item-management'" scope="col">M</th>
+            <th *ngIf="this.currentRoute !== '/item-management'" scope="col">L</th>
+            <th *ngIf="this.currentRoute !== '/item-management'" scope="col">XL</th>
+            <th *ngIf="this.currentRoute !== '/item-management'" scope="col">XXL</th>
+            <th *ngIf="this.currentRoute === '/item-management'" scope="col">Quantity</th>
+            <th *ngIf="this.currentRoute === '/item-management'" scope="col">Store</th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody *ngIf="items$ | async as items; else loading">
+          <tr *ngFor="let item of items; let i = index">
+            <td>{{ i+1 }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.price }}</td>
+            <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.s }}</td>
+            <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.m }}</td>
+            <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.l }}</td>
+            <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.xl }}</td>
+            <td *ngIf="this.currentRoute !== '/item-management'">{{ item.size.xxl }}</td>
+            <td *ngIf="this.currentRoute === '/item-management'">
+              {{ getQuantity(item.size) }}</td>
+            <td *ngIf="this.currentRoute === '/item-management'">{{ item.stock }}</td>
+            <td><button (click)="removeItem(item.key)" class="btn btn-danger"
+                *ngIf="this.currentRoute === '/item-management'">Remove</button>
+            </td>
+            <td><button (click)="selectItem(item)" class="btn btn-info btn-select">Select</button></td>
+          </tr>
+        </tbody>
+        <ng-template #loading>
+          <div class="text-center loading">
+            <div class="spinner-grow text-light" style="margin: 4em 0" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
           </div>
-        </div>
-      </ng-template>
-    </table>
+        </ng-template>
+      </table>
+    </div>
   </div>
 </div>

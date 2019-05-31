@@ -16,12 +16,16 @@ export class UserRegisterComponent implements OnInit {
   ngOnInit() { }
 
   register(email: string, pass: string, name: string, authLevel: string) {
-    if (email && pass) {
+    if (email && pass && (pass.length>=6)) {
       // tslint:disable-next-line:radix
       this.auth.createAccount(email, pass, name, parseInt(authLevel));
-    } else {
+    }else if(pass.length<6){
+      alert('Please enter a password with more than 6 characters!');
+    }
+     else {
       alert('Email and password are required!');
     }
   }
+
 
 }
