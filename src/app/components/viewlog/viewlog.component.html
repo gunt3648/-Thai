@@ -3,7 +3,7 @@
 <div class="view-log-section">
   <div class="view-log">
     <div class="container">
-      <h2>Viewlog</h2>
+      <h2>Total today</h2>
       <table class="table">
         <thead>
           <tr>
@@ -18,11 +18,12 @@
           <tr *ngFor="let log of logs">
             <td>{{ log.store }}</td>
             <td>{{ log.name }}</td>
-            <td>{{ log.size }}</td>
+            <td>{{ getSize(log.size) }}</td>
             <td>{{ log.amount }}</td>
             <td>{{ log.price }}</td>
           </tr>
         </tbody>
+        <h2>Today total: {{ getTotal() }}</h2>
       </table>
       <ng-template #loading>
         <div class="text-center loading">
