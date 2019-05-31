@@ -11,7 +11,7 @@
     <div class="form-group col-3">
       <label for="item-store">store</label>
       <select *ngIf="store$ | async as store; else loading" name="item-store" class="form-control form-selector"
-        id="item-store" [disabled]="store.length == 0" #itemStore>
+        id="item-store" [disabled]="store.length == 0" [(ngModel)]="selectedOption" #itemStore>
         <option *ngIf="store.length == 0" value="">----</option>
         <option *ngFor="let s of store" [value]="s.name">{{ s.name }}</option>
       </select>
@@ -24,7 +24,7 @@
     </div>
     <div class="col-1">
       <button class="btn btn-primary btn-submit"
-        (click)="addItem(itemName.value, itemPrice.value, itemStore.value)">Submit</button>
+        (click)="addItem(itemName.value, itemPrice.value, selectedOption)">Submit</button>
     </div>
   </div>
 </div>
