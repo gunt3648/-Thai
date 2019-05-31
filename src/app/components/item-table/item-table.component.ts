@@ -47,7 +47,7 @@ export class ItemTableComponent implements OnInit, OnDestroy {
   initStore() {
     this.store$ = this.storeData.getStoreInfo().pipe(
       map(store => {
-        console.log('#',store);
+        console.log('#', store);
         return store;
       })
     );
@@ -58,15 +58,19 @@ export class ItemTableComponent implements OnInit, OnDestroy {
     this.itemData.deleteItem(key);
   }
 
-  compItem(key: string){
+  compItem(key: string) {
     this.items$ = this.itemData.getAllItems().pipe(
       map(items => {
         console.log(items);
         let arr = [];
-        map((item: Item) => {
-          if(item.stock === 'key') arr.push(item);
-        })
-        return arr;
+        if (key === 'all') {
+          return items;
+        } else {
+          items.map((item: Item) => {
+            if (item.stock === key) arr.push(item);
+          })
+          return arr;
+        }
       })
     )
   }
